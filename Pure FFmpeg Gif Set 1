@@ -3,129 +3,115 @@
 #Users on Windows: change forwardslashes to backslashes. 
 
 
-#%%%%%%%%%%%%%%%%%%%%%%%
-#2. SCREENCAPPING FRAMES
-#%%%%%%%%%%%%%%%%%%%%%%%
-
-#Move your shell terminal to the FRAMES folder where video.mp4 is located (S01E07 of Supernatural)
+#Screencap 30 frames every second from video.mp4 starting at the 08.02 timestamp and ending 9 seconds later
 cd ~/Desktop/FRAMES
-
-#Take a PNG screencap 30 times per second from video.mp4 starting at the 8:02 timestamp and continuing for 9 seconds.
-#Dump all the resulting screencaps into the FRAMES folder.
 ffmpeg -i video.mp4 -r 30 -t 9 -ss 08:02 -f image2 frame_%4d.png
 
-#Do step 3 of the Pure FFmpeg Tutorial before continuing so you have the necessary folders.
 
-#%%%%%%%%%%%
-#4. CROPPING
-#%%%%%%%%%%%
-
-#****************************
-#Shots 1, 2, & 5 (Dean shots)
-#****************************
-
-#Move to the folder containing all frames of my first shot.
+#Make preliminary gifs for testing
 cd ~/Desktop/FRAMES/1
+ffmpeg -y -start_number 0018 -i frame_%04d.png -vf "fps=30" Test.gif
 
-#Generating a preliminary GIF for FFplay.
-
-ffmpeg -y -start_number 0018 -i frame_%04d.png -vf "fps=30" test1.gif
-
-#display my gif with FFplay (close the FFplay player to end the process).
-
-ffplay test1.gif
-
-#I want to crop to a 1080 x 1080 square frame: -vf "crop=1080:1080:x:1080"
-#I need to determine the proper x-value that centers Dean in the frame (it's 250)
-
-ffplay -vf "crop=1080:1080:250:1080" test1.gif
-
-#Dean is in shots 1, 3, and 5 and doesn't move. 
-#Applying the crop to all Dean shots (folders 1, 3, and 5)
-
-cd ~/Desktop/FRAMES/1
-for i in *.png; do ffmpeg -y -i "$i" -vf "crop=1080:1080:250:1080" crop/${i%.png}.png; done
+cd ~/Desktop/FRAMES/2
+ffmpeg -y -start_number 0102 -i frame_%04d.png -vf "fps=30" Test.gif
 
 cd ~/Desktop/FRAMES/3
-for i in *.png; do ffmpeg -y -i "$i" -vf "crop=1080:1080:250:1080" crop/${i%.png}.png; done
+ffmpeg -y -start_number 0127 -i frame_%04d.png -vf "fps=30" Test.gif
+
+cd ~/Desktop/FRAMES/4
+ffmpeg -y -start_number 0159 -i frame_%04d.png -vf "fps=30" Test.gif
 
 cd ~/Desktop/FRAMES/5
-for i in *.png; do ffmpeg -y -i "$i" -vf "crop=1080:1080:250:1080" crop/${i%.png}.png; done
+ffmpeg -y -start_number 0217 -i frame_%04d.png -vf "fps=30" Test.gif
 
-#*******************
-#Shot 2 (Purple guy)
-#*******************
 
-#Testing crops on shot 2 (Purple Guy)
+#Play the gifs if you want (you don't have to yet if you don't want to. This is just to test the command).
+cd ~/Desktop/FRAMES/1
+ffplay Test.gif
+
 cd ~/Desktop/FRAMES/2
-ffmpeg -y -start_number 0102 -i frame_%04d.png -vf "fps=30" test2.gif
-ffplay -vf "crop=1080:1080:600:1080" test2.gif
+ffplay Test.gif
 
-#Applying the crop to all frames of shot 2
-for i in *.png; do ffmpeg -y -i "$i" -vf "crop=1080:1080:600:1080" crop/${i%.png}.png; done
+cd ~/Desktop/FRAMES/3
+ffplay Test.gif
 
-
-#************
-#Shot 4 (Sam)
-#************
-
-#Testing crops on shot 4
 cd ~/Desktop/FRAMES/4
-ffmpeg -y -start_number 0159 -i frame_%04d.png -vf "fps=30" test4.gif
-ffplay -vf "crop=1080:1080:100:1080" test4.gif
+ffplay Test.gif
 
-#Applying the crop to all frames of shot 4
+cd ~/Desktop/FRAMES/5
+ffplay Test.gif
+
+
+#Testing crops on frames.
+cd ~/Desktop/FRAMES/1
+ffplay -vf "crop=1080:1080:250:1080" Test.gif
+
+cd ~/Desktop/FRAMES/2
+ffplay -vf "crop=1080:1080:600:1080" Test.gif
+
+cd ~/Desktop/FRAMES/3
+ffplay -vf "crop=1080:1080:250:1080" Test.gif
+
 cd ~/Desktop/FRAMES/4
-for i in *.png; do ffmpeg -y -i "$i" -vf "crop=1080:1080:100:1080" crop/${i%.png}.png; done
+ffplay -vf "crop=1080:1080:100:1080" Test.gif
+
+cd ~/Desktop/FRAMES/5
+ffplay -vf "crop=1080:1080:250:1080" Test.gif
 
 
-#%%%%%%%%%%%
-#5. COLORING
-#%%%%%%%%%%%
+#Testing coloring on frames. 
+cd ~/Desktop/FRAMES/1
+ffplay -vf "crop=1080:1080:250:1080,eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" Test.gif
 
-#Testing color adjustments on my first shot
-cd ~/Desktop/FRAMES/1/crop
-ffmpeg -y -start_number 0018 -i frame_%04d.png -vf "fps=30" test1.gif
-ffplay -vf "eq=al:brightness=0.06:saturation=1.7:contrast=1.2,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" test1.gif
+cd ~/Desktop/FRAMES/2
+ffplay -vf "crop=1080:1080:250:1080,eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" Test.gif
 
-#Since this scene is well lit, I used the same coloring settings on all of the frames.
-#Recolor set 1
-cd ~/Desktop/FRAMES/1/crop
-for i in *.png; do ffmpeg -y -i "$i" -vf "eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" ~/Desktop/FRAMES/1/colored/${i%.png}.png; done 
+cd ~/Desktop/FRAMES/3
+ffplay -vf "crop=1080:1080:250:1080,eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" Test.gif
 
-#Recolor set 2
-cd ~/Desktop/FRAMES/2/crop
-for i in *.png; do ffmpeg -y -i "$i" -vf "eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" ~/Desktop/FRAMES/2/colored/${i%.png}.png; done
+cd ~/Desktop/FRAMES/4
+ffplay -vf "crop=1080:1080:250:1080,eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" Test.gif
 
-#Recolor set 3
-cd ~/Desktop/FRAMES/3/crop
-for i in *.png; do ffmpeg -y -i "$i" -vf "eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" ~/Desktop/FRAMES/3/colored/${i%.png}.png; done 
+cd ~/Desktop/FRAMES/5
+ffplay -vf "crop=1080:1080:250:1080,eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" Test.gif
 
-#Recolor set 4
-cd ~/Desktop/FRAMES/4/crop
-for i in *.png; do ffmpeg -y -i "$i" -vf "eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" ~/Desktop/FRAMES/4/colored/${i%.png}.png; done
 
-#Recolor set 5
-cd ~/Desktop/FRAMES/5/crop
-for i in *.png; do ffmpeg -y -i "$i" -vf "eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" ~/Desktop/FRAMES/5/colored/${i%.png}.png; done
+#Apply crop and coloring to frames and store in new folder.
+cd ~/Desktop/FRAMES/1
+mkdir crop
+for i in *.png; do ffmpeg -y -i "$i" -start_number 0018 -i frame_%04d.png -vf "fps=30,crop=1080:1080:250:1080,eq=brightness=0.06:saturation=1.70:contrast=1.10,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" crop/${i%.png}.png; done
 
-#%%%%%%%%%%%%%
-#6. Captioning
-#%%%%%%%%%%%%%
+cd ~/Desktop/FRAMES/2
+mkdir crop
+for i in *.png; do ffmpeg -y -i "$i" -start_number 0102 -i frame_%04d.png -vf "fps=30,crop=1080:1080:600:1080,eq=brightness=0.06:saturation=1.70:contrast=1.10,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" crop/${i%.png}.png; done
+
+cd ~/Desktop/FRAMES/3
+mkdir crop
+for i in *.png; do ffmpeg -y -i "$i" -start_number 0127 -i frame_%04d.png -vf "fps=30,crop=1080:1080:250:1080,eq=brightness=0.06:saturation=1.70:contrast=1.10,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" crop/${i%.png}.png; done
+
+cd ~/Desktop/FRAMES/4
+mkdir crop
+for i in *.png; do ffmpeg -y -i "$i" -start_number 0159 -i frame_%04d.png -vf "fps=30,crop=1080:1080:100:1080,eq=brightness=0.06:saturation=1.70:contrast=1.10,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" crop/${i%.png}.png; done
+
+cd ~/Desktop/FRAMES/5
+mkdir crop
+for i in *.png; do ffmpeg -y -i "$i" -start_number 0217 -i frame_%04d.png -vf "fps=30,crop=1080:1080:250:1080,eq=brightness=0.06:saturation=1.70:contrast=1.10,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" crop/${i%.png}.png; done
+
 
 #I need to caption  my first shot (shot 1) “You missed a spot”
-cd ~/Desktop/FRAMES/1/colored
-for i in *.png; do ffmpeg -y -i "$i" -vf "drawtext=fontfile=fonts/path/Arial-Bold.ttf:text='You missed a spot.':x=(w-text_w)/2:y=(h-text_h*2):fontsize=40:bordercolor=black:borderw=3:fontcolor=#FDDA0D" ~/Desktop/FRAMES/1/captioned/${i%.png}.png; done 
+cd ~/Desktop/FRAMES/1/crop
+mkdir captioned
+for i in *.png; do ffmpeg -y -i "$i" -vf "drawtext=fontfile=fonts/path/Arial-Bold.ttf:text='You missed a spot.':x=(w-text_w)/2:y=(h-text_h*2):fontsize=40:bordercolor=black:borderw=3:fontcolor=#FDDA0D" captioned/${i%.png}.png; done 
+
 
 #I also need to caption the 3rd shot: “Just down there on the back.”
-cd ~/Desktop/FRAMES/3/colored
-for i in *.png; do ffmpeg -y -i "$i" -vf "drawtext=fontfile=fonts/path/Arial-Bold.ttf:text='Just down there on the back.':x=(w-text_w)/2:y=(h-text_h*2):fontsize=40:bordercolor=black:borderw=3:fontcolor=#FDDA0D" ~/Desktop/FRAMES/3/captioned/${i%.png}.png; done
+cd ~/Desktop/FRAMES/3/crop
+mkdir captioned
+for i in *.png; do ffmpeg -y -i "$i" -vf "drawtext=fontfile=fonts/path/Arial-Bold.ttf:text='Just down there on the back.':x=(w-text_w)/2:y=(h-text_h*2):fontsize=40:bordercolor=black:borderw=3:fontcolor=#FDDA0D" captioned/${i%.png}.png; done
 
-#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#7. Converting Frames into Gifs
-#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-#Do this step after copying colored, captioned shots into folders folders gif_1, gif_2, gif_3
+#Do the next step after copying colored, captioned shots into folders folders gif_1, gif_2, gif_3
+
 
 #Compiling first gif (1.gif)
 cd ~/Desktop/FRAMES/gif_1
