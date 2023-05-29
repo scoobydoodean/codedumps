@@ -1,5 +1,8 @@
 #This file presents the bash scripting used to create this gifset with FFmpeg: https://www.tumblr.com/goodgifswithfreetoolschallenge/718596605308289024?source=share
 
+#Users on Windows: change forwardslashes to backslashes. 
+
+
 #%%%%%%%%%%%%%%%%%%%%%%%
 #2. SCREENCAPPING FRAMES
 #%%%%%%%%%%%%%%%%%%%%%%%
