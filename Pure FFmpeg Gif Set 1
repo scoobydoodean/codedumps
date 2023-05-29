@@ -89,15 +89,19 @@ ffplay -vf "eq=al:brightness=0.06:saturation=1.7:contrast=1.2,smartblur=1.5:-0.3
 #Recolor set 1
 cd ~/Desktop/FRAMES/1/crop
 for i in *.png; do ffmpeg -y -i "$i" -vf "eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" ~/Desktop/FRAMES/1/colored/${i%.png}.png; done 
+
 #Recolor set 2
 cd ~/Desktop/FRAMES/2/crop
 for i in *.png; do ffmpeg -y -i "$i" -vf "eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" ~/Desktop/FRAMES/2/colored/${i%.png}.png; done
+
 #Recolor set 3
 cd ~/Desktop/FRAMES/3/crop
 for i in *.png; do ffmpeg -y -i "$i" -vf "eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" ~/Desktop/FRAMES/3/colored/${i%.png}.png; done 
+
 #Recolor set 4
 cd ~/Desktop/FRAMES/4/crop
 for i in *.png; do ffmpeg -y -i "$i" -vf "eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" ~/Desktop/FRAMES/4/colored/${i%.png}.png; done
+
 #Recolor set 5
 cd ~/Desktop/FRAMES/5/crop
 for i in *.png; do ffmpeg -y -i "$i" -vf "eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" ~/Desktop/FRAMES/5/colored/${i%.png}.png; done
