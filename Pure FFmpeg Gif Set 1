@@ -4,27 +4,39 @@
 #USERS ON WINDOWS: TO GET THIS SCRIPT TO RUN, CHANGE FORWARD SLASHES TO BACK SLASHES. 
 #Lines beginning with a hash are notes on the commands and your system shell terminal (Powershell on Windows, Terminal on Mac) will ignore them.
 
-#Step 0: Before starting, download FFmpeg 
-#If homebrew is installed:
+#-----------------------------------------------
+#Step 1: Installation
+#-----------------------------------------------
+
+#If Homebrew is installed:
 brew install ffmpeg
 
 
 
-#Step 1: manually make a folder called FRAMES on your desktop and place video.mp4 in that folder.
+#-----------------------------------------------
+#Step 2: Screencapping Frames with FFmpeg
+#-----------------------------------------------
 
+#Manually make a folder called FRAMES on your desktop and place source video "video.mp4" in that folder.
 
-
-#Step 2: Screencap 30 frames every second from video.mp4 starting at the 08.02 timestamp and ending 9 seconds later
+#Now screencap 30 frames every second from video.mp4 starting at the 08.02 timestamp and ending 9 seconds later
 cd ~/Desktop/FRAMES
 ffmpeg -i video.mp4 -r 30 -t 9 -ss 08:02 -f image2 frame_%4d.png
 
 
 
-#Step 3: Manually delete unwanted frames in file browser and organize frames into shot folders (1, 2, 3, 4, and 5).
+#-----------------------------------------------
+#Step 3: Organize in the FRAMES Folder
+#-----------------------------------------------
+
+#Manually delete unwanted frames in file browser and organize frames into shot folders (1, 2, 3, 4, and 5).
 
 
 
-#Step 4: Make preliminary gifs for testing with FFplay
+#-----------------------------------------------
+#Step 4: Setting Up FFplay
+#-----------------------------------------------
+
 cd ~/Desktop/FRAMES/1
 ffmpeg -y -start_number 0018 -i frame_%04d.png -vf "fps=30" Test.gif
 
@@ -39,7 +51,6 @@ ffmpeg -y -start_number 0159 -i frame_%04d.png -vf "fps=30" Test.gif
 
 cd ~/Desktop/FRAMES/5
 ffmpeg -y -start_number 0217 -i frame_%04d.png -vf "fps=30" Test.gif
-
 
 
 #Play the gifs if you want (you don't have to yet if you don't want to. This is just to test the ffplay command).
@@ -60,7 +71,10 @@ ffplay Test.gif
 
 
 
-#Step 5: Testing crop settings (all numbers except the third value should stay the same for square sets).
+#-----------------------------------------------
+#Step 5: Test Crop Settings
+#-----------------------------------------------
+
 cd ~/Desktop/FRAMES/1
 ffplay -vf "crop=1080:1080:250:1080" Test.gif
 
@@ -78,7 +92,10 @@ ffplay -vf "crop=1080:1080:250:1080" Test.gif
 
 
 
-#Step 6: Testing coloring settings + keeping crop. 
+#-----------------------------------------------
+#Step 6: Test Coloring Settings + keeping crop. 
+#-----------------------------------------------
+
 cd ~/Desktop/FRAMES/1
 ffplay -vf "crop=1080:1080:250:1080,eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" Test.gif
 
@@ -96,7 +113,10 @@ ffplay -vf "crop=1080:1080:250:1080,eq=al:brightness=0.06:saturation=1.7:contras
 
 
 
+#-----------------------------------------------
 #Step 7: Apply crop and coloring to frames and store in new folder.
+#-----------------------------------------------
+
 cd ~/Desktop/FRAMES/1
 mkdir crop
 for i in *.png; do ffmpeg -y -i "$i" -vf "crop=1080:1080:250:1080,eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" crop/${i%.png}.png; done
@@ -119,7 +139,11 @@ for i in *.png; do ffmpeg -y -i "$i" -vf "crop=1080:1080:250:1080,eq=al:brightne
 
 
 
-#Step 8: I need to caption  my first shot (shot 1) “You missed a spot”
+#-----------------------------------------------
+#Step 8: Captioning
+#-----------------------------------------------
+
+#I need to caption  my first shot (shot 1) “You missed a spot”
 cd ~/Desktop/FRAMES/1/crop
 mkdir captioned
 for i in *.png; do ffmpeg -y -i "$i" -vf "drawtext=fontfile=fonts/path/Arial-Bold.ttf:text='You missed a spot.':x=(w-text_w)/2:y=(h-text_h*2):fontsize=40:bordercolor=black:borderw=3:fontcolor=#FDDA0D" captioned/${i%.png}.png; done 
@@ -132,18 +156,35 @@ for i in *.png; do ffmpeg -y -i "$i" -vf "drawtext=fontfile=fonts/path/Arial-Bol
 
 
 
+#-----------------------------------------------
 #Step 9: Manually move or copy finishes shots into new folders gif_1, gif_2, gif_3
+#-----------------------------------------------
 
 
+
+#-----------------------------------------------
 #Step 10: Compiling into GIFs
+#-----------------------------------------------
+
 #Compiling first gif (1.gif)
 cd ~/Desktop/FRAMES/gif_1
 ffmpeg -y -start_number 0018 -i frame_%04d.png -vf "fps=30,scale=540:-1:flags=lanczos" ~/Desktop/FRAMES/1.gif
+
 
 #Compiling second gif (2.gif)
 cd ~/Desktop/FRAMES/gif_2
 ffmpeg -y -start_number 0102 -i frame_%04d.png -vf "fps=30,scale=540:-1:flags=lanczos" ~/Desktop/FRAMES/2.gif
 
+
 #Compiling third gif (3.gif)
 cd ~/Desktop/FRAMES/gif_3
 ffmpeg -y -start_number 0159 -i frame_%04d.png -vf "fps=30,scale=540:-1:flags=lanczos" ~/Desktop/FRAMES/3.gif
+
+
+
+
+
+
+
+
+
