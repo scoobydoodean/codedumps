@@ -97,19 +97,19 @@ ffplay -vf "crop=1080:1080:250:1080" Test.gif
 #-----------------------------------------------
 
 cd ~/Desktop/FRAMES/1
-ffplay -vf "crop=1080:1080:250:1080,eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" Test.gif
+ffplay -vf "crop=1080:1080:250:1080,eq=brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" Test.gif
 
 cd ~/Desktop/FRAMES/2
-ffplay -vf "crop=1080:1080:250:1080,eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" Test.gif
+ffplay -vf "crop=1080:1080:250:1080,eq=brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" Test.gif
 
 cd ~/Desktop/FRAMES/3
-ffplay -vf "crop=1080:1080:250:1080,eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" Test.gif
+ffplay -vf "crop=1080:1080:250:1080,eq=brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" Test.gif
 
 cd ~/Desktop/FRAMES/4
-ffplay -vf "crop=1080:1080:250:1080,eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" Test.gif
+ffplay -vf "crop=1080:1080:250:1080,eq=brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" Test.gif
 
 cd ~/Desktop/FRAMES/5
-ffplay -vf "crop=1080:1080:250:1080,eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" Test.gif
+ffplay -vf "crop=1080:1080:250:1080,eq=brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" Test.gif
 
 
 
@@ -119,23 +119,23 @@ ffplay -vf "crop=1080:1080:250:1080,eq=al:brightness=0.06:saturation=1.7:contras
 
 cd ~/Desktop/FRAMES/1
 mkdir crop
-for i in *.png; do ffmpeg -y -i "$i" -vf "crop=1080:1080:250:1080,eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" crop/${i%.png}.png; done
+for i in *.png; do ffmpeg -y -i "$i" -vf "crop=1080:1080:250:1080,eq=brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" crop/${i%.png}.png; done
 
 cd ~/Desktop/FRAMES/2
 mkdir crop
-for i in *.png; do ffmpeg -y -i "$i" -vf "crop=1080:1080:250:1080,eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" crop/${i%.png}.png; done
+for i in *.png; do ffmpeg -y -i "$i" -vf "crop=1080:1080:250:1080,eq=brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" crop/${i%.png}.png; done
 
 cd ~/Desktop/FRAMES/3
 mkdir crop
-for i in *.png; do ffmpeg -y -i "$i" -vf "crop=1080:1080:250:1080,eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" crop/${i%.png}.png; done
+for i in *.png; do ffmpeg -y -i "$i" -vf "crop=1080:1080:250:1080,eq=brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" crop/${i%.png}.png; done
 
 cd ~/Desktop/FRAMES/4
 mkdir crop
-for i in *.png; do ffmpeg -y -i "$i" -vf "crop=1080:1080:250:1080,eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" crop/${i%.png}.png; done
+for i in *.png; do ffmpeg -y -i "$i" -vf "crop=1080:1080:250:1080,eq=brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" crop/${i%.png}.png; done
 
 cd ~/Desktop/FRAMES/5
 mkdir crop
-for i in *.png; do ffmpeg -y -i "$i" -vf "crop=1080:1080:250:1080,eq=al:brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" crop/${i%.png}.png; done
+for i in *.png; do ffmpeg -y -i "$i" -vf "crop=1080:1080:250:1080,eq=brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" crop/${i%.png}.png; done
 
 
 
