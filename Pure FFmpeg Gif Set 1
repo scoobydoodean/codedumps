@@ -143,13 +143,23 @@ for i in *.png; do ffmpeg -y -i "$i" -vf "crop=1080:1080:250:1080,eq=brightness=
 #Step 8: Captioning
 #-----------------------------------------------
 
-#I need to caption  my first shot (shot 1) “You missed a spot”
+#FFplay caption shot 1
+cd ~/Desktop/FRAMES/1/crop
+ffplay -vf "drawtext=text='You missed a spot.':x=(w-text_w)/2:y=(h-text_h*2):fontsize=40:bordercolor=black:borderw=3:fontcolor=#FDDA0D" frame_0018.png
+
+#FFplay caption shot 3
+cd ~/Desktop/FRAMES/3/crop
+ffplay -vf -vf "drawtext=fontfile=fonts/path/Arial-Bold.ttf:text='Just down there on the back.':x=(w-text_w)/2:y=(h-text_h*2):fontsize=40:bordercolor=black:borderw=3:fontcolor=#FDDA0D" frame_0018.png
+
+
+
+#Applying the caption to shot 1
 cd ~/Desktop/FRAMES/1/crop
 mkdir captioned
-for i in *.png; do ffmpeg -y -i "$i" -vf "drawtext=fontfile=fonts/path/Arial-Bold.ttf:text='You missed a spot.':x=(w-text_w)/2:y=(h-text_h*2):fontsize=40:bordercolor=black:borderw=3:fontcolor=#FDDA0D" captioned/${i%.png}.png; done 
+for i in *.png; do ffmpeg -y -i "$i" -vf "drawtext=text='You missed a spot.':x=(w-text_w)/2:y=(h-text_h*2):fontsize=40:bordercolor=black:borderw=3:fontcolor=#FDDA0D" captioned/${i%.png}.png; done 
 
 
-#I also need to caption the 3rd shot: “Just down there on the back.”
+#Applying the caption to shot 3
 cd ~/Desktop/FRAMES/3/crop
 mkdir captioned
 for i in *.png; do ffmpeg -y -i "$i" -vf "drawtext=fontfile=fonts/path/Arial-Bold.ttf:text='Just down there on the back.':x=(w-text_w)/2:y=(h-text_h*2):fontsize=40:bordercolor=black:borderw=3:fontcolor=#FDDA0D" captioned/${i%.png}.png; done
@@ -157,7 +167,7 @@ for i in *.png; do ffmpeg -y -i "$i" -vf "drawtext=fontfile=fonts/path/Arial-Bol
 
 
 #-----------------------------------------------
-#Step 9: Manually move or copy finishes shots into new folders gif_1, gif_2, gif_3
+#Step 9: Manually move or copy finishes shots into new subfolders gif_1, gif_2, gif_3 in the FRAMES folder.
 #-----------------------------------------------
 
 
