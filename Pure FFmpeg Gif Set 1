@@ -1,9 +1,14 @@
 #This file presents the bash scripting used to create this gifset with FFmpeg: https://www.tumblr.com/goodgifswithfreetoolschallenge/718596605308289024?source=share
 
-#Users on Windows: change forwardslashes to backslashes. 
+#THIS SCRIPT FOLLOWS BASH NOTATION USED ON LINUX AND MAC
+#USERS ON WINDOWS: TO GET THIS SCRIPT TO RUN, CHANGE FORWARD SLASHES TO BACK SLASHES. 
+#Lines beginning with a hash are notes on the commands and your system shell terminal (Powershell on Windows, Terminal on Mac) will treat them as such. 
 
+#Step 0: Before starting, download FFmpeg 
 
-#Screencap 30 frames every second from video.mp4 starting at the 08.02 timestamp and ending 9 seconds later
+#Step 1: make a folder called FRAMES on your desktop
+
+#Step 2: Screencap 30 frames every second from video.mp4 starting at the 08.02 timestamp and ending 9 seconds later
 cd ~/Desktop/FRAMES
 ffmpeg -i video.mp4 -r 30 -t 9 -ss 08:02 -f image2 frame_%4d.png
 
