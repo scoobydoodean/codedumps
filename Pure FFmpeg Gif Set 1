@@ -56,19 +56,19 @@ ffmpeg -y -start_number 0217 -i frame_%04d.png -vf "fps=30" Test.gif
 
 #Play the gifs if you want (you don't have to yet if you don't want to. This is just to test the ffplay command).
 cd ~/Desktop/FRAMES/1
-ffplay Test.gif
+ffplay -loop 0 Test.gif
 
 cd ~/Desktop/FRAMES/2
-ffplay Test.gif
+ffplay -loop 0 Test.gif
 
 cd ~/Desktop/FRAMES/3
-ffplay Test.gif
+ffplay -loop 0 Test.gif
 
 cd ~/Desktop/FRAMES/4
-ffplay Test.gif
+ffplay -loop 0 Test.gif
 
 cd ~/Desktop/FRAMES/5
-ffplay Test.gif
+ffplay -loop 0 Test.gif
 
 
 
@@ -77,19 +77,19 @@ ffplay Test.gif
 #-----------------------------------------------
 
 cd ~/Desktop/FRAMES/1
-ffplay -vf "crop=1080:1080:250:1080" Test.gif
+ffplay -vf "crop=1080:1080:250:1080" -loop 0 Test.gif
 
 cd ~/Desktop/FRAMES/2
-ffplay -vf "crop=1080:1080:600:1080" Test.gif
+ffplay -vf "crop=1080:1080:600:1080" -loop 0 Test.gif
 
 cd ~/Desktop/FRAMES/3
-ffplay -vf "crop=1080:1080:250:1080" Test.gif
+ffplay -vf "crop=1080:1080:250:1080" -loop 0 Test.gif
 
 cd ~/Desktop/FRAMES/4
-ffplay -vf "crop=1080:1080:100:1080" Test.gif
+ffplay -vf "crop=1080:1080:100:1080" -loop 0 Test.gif
 
 cd ~/Desktop/FRAMES/5
-ffplay -vf "crop=1080:1080:250:1080" Test.gif
+ffplay -vf "crop=1080:1080:250:1080" -loop 0 Test.gif
 
 
 
@@ -98,19 +98,19 @@ ffplay -vf "crop=1080:1080:250:1080" Test.gif
 #-----------------------------------------------
 
 cd ~/Desktop/FRAMES/1
-ffplay -vf "crop=1080:1080:250:1080,eq=brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" Test.gif
+ffplay -vf "crop=1080:1080:250:1080,eq=brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" -loop 0 Test.gif
 
 cd ~/Desktop/FRAMES/2
-ffplay -vf "crop=1080:1080:250:1080,eq=brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" Test.gif
+ffplay -vf "crop=1080:1080:250:1080,eq=brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" -loop 0 Test.gif
 
 cd ~/Desktop/FRAMES/3
-ffplay -vf "crop=1080:1080:250:1080,eq=brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" Test.gif
+ffplay -vf "crop=1080:1080:250:1080,eq=brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" -loop 0 Test.gif
 
 cd ~/Desktop/FRAMES/4
-ffplay -vf "crop=1080:1080:250:1080,eq=brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" Test.gif
+ffplay -vf "crop=1080:1080:250:1080,eq=brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" -loop 0 Test.gif
 
 cd ~/Desktop/FRAMES/5
-ffplay -vf "crop=1080:1080:250:1080,eq=brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" Test.gif
+ffplay -vf "crop=1080:1080:250:1080,eq=brightness=0.06:saturation=1.7:contrast=1.1,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" -loop 0 Test.gif
 
 
 
