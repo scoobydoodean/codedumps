@@ -1,4 +1,5 @@
 #This file presents the bash scripting used to create this gifset from S01E07 of Supernatural using FFmpeg: https://www.tumblr.com/goodgifswithfreetoolschallenge/718596605308289024?source=share
+#A tutorial that goes with that gif set and this code is here: https://www.tumblr.com/goodgifswithfreetoolschallenge/718697985612136448/tutorial-3?source=share
 
 #THIS SCRIPT FOLLOWS BASH NOTATION USED ON LINUX AND MAC
 #USERS ON WINDOWS: TO GET THIS SCRIPT TO RUN, CHANGE FORWARD SLASHES TO BACK SLASHES. 
