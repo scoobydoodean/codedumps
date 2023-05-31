@@ -1,4 +1,4 @@
-#This file presents the bash scripting used to create this gifset from S01E03 of Supernatural using FFmpeg: https://www.tumblr.com/scoobydoodean/718815872838483968/103-dead-in-the-water?source=share
+#This file presents the bash scripts used to create this gifset from S01E03 of Supernatural using FFmpeg: https://www.tumblr.com/scoobydoodean/718815872838483968/103-dead-in-the-water?source=share
 
 #THIS SCRIPT FOLLOWS BASH NOTATION USED ON LINUX AND MAC
 #USERS ON WINDOWS: TO GET THIS SCRIPT TO RUN, CHANGE FORWARD SLASHES TO BACK SLASHES.
