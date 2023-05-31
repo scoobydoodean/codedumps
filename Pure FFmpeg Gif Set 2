@@ -1,0 +1,317 @@
+#This file presents the bash scripting used to create this gifset from S01E03 of Supernatural using FFmpeg: https://www.tumblr.com/scoobydoodean/718815872838483968/103-dead-in-the-water?source=share
+
+#THIS SCRIPT FOLLOWS BASH NOTATION USED ON LINUX AND MAC
+#USERS ON WINDOWS: TO GET THIS SCRIPT TO RUN, CHANGE FORWARD SLASHES TO BACK SLASHES.
+#Lines beginning with a hash are notes on the commands and your system shell terminal (Powershell on Windows, Terminal on Mac) will ignore them.
+
+
+#-----------------------------------------------
+#Step 2: Screencapping Frames with FFmpeg
+#-----------------------------------------------
+
+#Manually make a folder called FRAMES on your desktop and place source video "video.mp4" in that folder.
+
+#Now screencap 30 frames every second from video.mp4 starting at the 03.54 timestamp and at 04:30 (36 seconds later)
+cd ~/Desktop/FRAMES
+ffmpeg -i video.mp4 -r 30 -t 36 -ss 03:54 -f image2 frame_%4d.png
+
+
+
+#-----------------------------------------------
+#Step 3: Organize in the FRAMES Folder
+#-----------------------------------------------
+
+#Manually delete unwanted frames in file browser and organize frames into 14 shot folders.
+
+#Shot 1, 5, 7, 9, 11, and 13 are all Dean closeup (7 and 9 he is moving around too much for the same crop)
+#Shot 2, 4, 6, 10, 12, 14 all on Sam closeup.
+#Shot 3 and 8 are unique.
+
+#-----------------------------------------------
+#Step 4: Setting Up FFplay
+#-----------------------------------------------
+
+#For Shot 1, 5, 11, and 13 all Dean closeup.
+cd ~/Desktop/FRAMES/1
+ffmpeg -y -start_number 0012 -i frame_%04d.png -vf "fps=30" Test.gif
+
+#For shot 2, 4, 6, 10, 12 all on Sam closeup.
+cd ~/Desktop/FRAMES/2
+ffmpeg -y -start_number 0072 -i frame_%04d.png -vf "fps=30" Test.gif
+
+#Sam closeup 14
+cd ~/Desktop/FRAMES/14
+ffmpeg -y -start_number 1008 -i frame_%04d.png -vf "fps=30" Test.gif
+
+#For shots 7 and 9 closeup up he moves around a lot!
+cd ~/Desktop/FRAMES/7
+ffmpeg -y -start_number 0452 -i frame_%04d.png -vf "fps=30" Test.gif
+
+cd ~/Desktop/FRAMES/9
+ffmpeg -y -start_number 0612 -i frame_%04d.png -vf "fps=30" Test.gif
+
+#shot 3
+cd ~/Desktop/FRAMES/3
+ffmpeg -y -start_number 0133 -i frame_%04d.png -vf "fps=30" Test.gif
+
+#shot 8
+cd ~/Desktop/FRAMES/8
+ffmpeg -y -start_number 0550 -i frame_%04d.png -vf "fps=30" Test.gif
+
+
+#-----------------------------------------------
+#Step 5: Test Crop Settings
+#-----------------------------------------------
+
+#Frames are 1920x1080. I want a square set (1080x1080).
+#1920 - 1080 = 840 is the highest I can make my x-coordinate without my crop exceeding the limits of the frame.
+
+
+#For Shot 1, 5, 11, and 13 all Dean closeup.
+cd ~/Desktop/FRAMES/1
+ffplay -vf "crop=1080:1080:600:1080" -loop 0 Test.gif
+
+#Dean closeup shot 7 and 9
+cd ~/Desktop/FRAMES/7
+ffplay -vf "crop=1080:1080:650:1080" -loop 0 Test.gif
+
+cd ~/Desktop/FRAMES/9
+ffplay -vf "crop=1080:1080:675:1080" -loop 0 Test.gif
+
+#For shot 2, 4, 6, 10, 12 all on Sam closeup.
+cd ~/Desktop/FRAMES/2
+ffplay -vf "crop=1080:1080:100:1080" -loop 0 Test.gif
+
+#Sam close up 14
+cd ~/Desktop/FRAMES/14
+ffplay -vf "crop=1080:1080:200:1080" -loop 0 Test.gif
+
+#shot 3
+cd ~/Desktop/FRAMES/3
+ffplay -vf "crop=1080:1080:650:1080" -loop 0 Test.gif
+
+#shot 8
+cd ~/Desktop/FRAMES/8
+ffplay -vf "crop=1080:1080:50:1080" -loop 0 Test.gif
+
+
+
+
+
+#-----------------------------------------------
+#Step 6: Test Coloring Settings + keeping crop.
+#-----------------------------------------------
+
+#For colors for Shot 1, 5, 7, 9, 11, and 13 all Dean closeup.
+cd ~/Desktop/FRAMES/1
+ffplay -vf "crop=1080:1080:600:1080,eq=brightness=0.09:saturation=1.7:contrast=1.2,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" -loop 0 Test.gif
+
+#For shot 2, 4, 6, 10, 12, 14 all on Sam closeup.
+cd ~/Desktop/FRAMES/2
+ffplay -vf "crop=1080:1080:100:1080,eq=brightness=0.05:saturation=1.7:contrast=1.2,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" -loop 0 Test.gif
+
+cd ~/Desktop/FRAMES/3
+ffplay -vf "crop=1080:1080:650:1080,eq=brightness=0.08:saturation=1.7:contrast=1.2,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" -loop 0 Test.gif
+
+cd ~/Desktop/FRAMES/8
+ffplay -vf "crop=1080:1080:50:1080,eq=brightness=0.00:saturation=1.7:contrast=1.2,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" -loop 0 Test.gif
+
+
+
+
+#-----------------------------------------------
+#Step 7: Apply crop and coloring to frames and store them ALL together in a new folder called "DONE"
+#-----------------------------------------------
+
+
+mkdir ~/Desktop/FRAMES/DONE
+
+#For Shot 1, 5, 11, and 13 all Dean closeup.
+
+for j in 1 5 11 13; do
+
+cd ~/Desktop/FRAMES/"$j"
+for i in *.png; do ffmpeg -y -i "$i" -vf "crop=1080:1080:600:1080,eq=brightness=0.09:saturation=1.7:contrast=1.2,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" ~/Desktop/FRAMES/DONE/${i%.png}.png; done;
+
+done
+
+
+#For shot 2, 4, 6, 10, 12 all on Sam closeup.
+
+for j in 2 4 6 10 12; do
+
+cd ~/Desktop/FRAMES/"$j"
+for i in *.png; do ffmpeg -y -i "$i" -vf "crop=1080:1080:100:1080,eq=brightness=0.05:saturation=1.7:contrast=1.2,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" ~/Desktop/FRAMES/DONE/${i%.png}.png; done;
+
+done
+
+
+#For shot 7 Dean closeup (same color settings as other dean closeups)
+
+cd ~/Desktop/FRAMES/7
+for i in *.png; do ffmpeg -y -i "$i" -vf "crop=1080:1080:650:1080,eq=brightness=0.09:saturation=1.7:contrast=1.2,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" ~/Desktop/FRAMES/DONE/${i%.png}.png; done
+
+
+#For shot 9 (same color settings as other dean closeups)
+
+cd ~/Desktop/FRAMES/9
+for i in *.png; do ffmpeg -y -i "$i" -vf "crop=1080:1080:675:1080,eq=brightness=0.09:saturation=1.7:contrast=1.2,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" ~/Desktop/FRAMES/DONE/${i%.png}.png; done
+
+
+
+cd ~/Desktop/FRAMES/3
+for i in *.png; do ffmpeg -y -i "$i" -vf "crop=1080:1080:650:1080,eq=brightness=0.08:saturation=1.7:contrast=1.2,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" ~/Desktop/FRAMES/DONE/${i%.png}.png; done
+
+cd ~/Desktop/FRAMES/8
+for i in *.png; do ffmpeg -y -i "$i" -vf "crop=1080:1080:50:1080,eq=brightness=0.00:saturation=1.7:contrast=1.2,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" ~/Desktop/FRAMES/DONE/${i%.png}.png; done
+
+cd ~/Desktop/FRAMES/14
+for i in *.png; do ffmpeg -y -i "$i" -vf "crop=1080:1080:200:1080,eq=brightness=0.00:saturation=1.7:contrast=1.2,smartblur=1.5:-0.35:-3.5:0.65:0.25:2.0" ~/Desktop/FRAMES/DONE/${i%.png}.png; done
+
+
+
+
+
+
+#-----------------------------------------------
+#Step 9: Organize "DONE" folder into gif_1, gif_2, gif_3, etc
+#-----------------------------------------------
+
+#Gif 1: Shot 1 and 2
+#Gif 2: Shot 3 (need to apply a blur box on these frames)
+#Gif 3: Shot 4
+#Gif 4: Shot 5 & 6 (need to caption on frames)
+#Gif 5: Shot 7 & 8
+#Gif 6: Shot 9
+#Gif 7: Shot 10 and 11a
+#Gif 8: Shot 11b, 12, 13, 14.
+
+
+#-----------------------------------------------
+#Step A1: BLURBOX (for frames in gif_2 folder)
+#-----------------------------------------------
+
+#I want to blur the name card in shot 3. Move frames with name into special subfolder inside DONE folder.
+#Title card starts on frame 0140 and ends on frame 0214. Drag these frames in folder "blurbox"
+#I'm going to test the blur on one frame. (frame_0163.png)
+
+#ffmpeg -i input.png -filter_complex "[0:v]crop=w:h:x:y,boxblur=10[fg]; [0:v][fg]overlay=300:350[v]" -map "[v]" Test.png
+
+#- where -vf  video filter
+#- w : pixel width of the blur
+#- h :  height of the blur
+#- x and y are the left top coordinates of blur
+
+
+#800 wide, 200 high, coordinates of top left corner: (0,850)
+
+cd ~/Desktop/FRAMES/DONE/gif_2/blurbox
+ffmpeg -y -i frame_0163.png -filter_complex "[0:v]crop=800:200:0:850,boxblur=25[fg]; [0:v][fg]overlay=0:850[v]" -map "[v]"
+ffplay Test.png
+
+
+#Apply to all frames in the blurbox folder and dump back into folder 3.
+
+cd ~/Desktop/FRAMES/DONE/gif_2/blurbox
+mkdir blurbox
+for i in *.png; do ffmpeg -y -i "$i" -filter_complex "[0:v]crop=800:200:0:850,boxblur=25[fg]; [0:v][fg]overlay=0:850[v]" -map "[v]" ~/Desktop/FRAMES/DONE/gif_2/${i%.png}.png; done
+
+
+
+#-----------------------------------------------
+#Step 10: Compiling into GIFs and Captioning (with subtitles instead of textdraw)
+#-----------------------------------------------
+
+
+#OutlineColour sets the colour of the box using hexadecimal code but in the format of ‘&HBBGGRR’.
+#It is in the reverse order of a usual HTML hex code which follows the ‘RRGGBB’ sequence.
+# examole: #2596be = &Hbe9625
+
+# Off white hex for Sam: #FAF9F6 = &HF6F9FA
+# Yellow hex for Dean: #FDDA0D = &H0DDAFD
+
+#For gif 1 I want the same captions over both frames.
+
+#place subtitles.srt in gif_1 folder : "People don't just disappear, Dean. Other people just stop looking for them." - Sam
+#Trim off some frames.
+cd ~/Desktop/FRAMES/DONE/gif_1
+ffmpeg -y -start_number 0029 -i frame_%04d.png -vf "fps=30,scale=480:-1:flags=lanczos,subtitles=subtitles.srt:force_style='Alignment=2,FontName=Arial,Bold=1,Fontsize=12,PrimaryColor=&HF6F9FA,OutlineColor=black,Outline=1,Shadow=0,MarginL=0,MarginR=0'" ~/Desktop/FRAMES/1.gif
+
+
+#For gif 2: "Something you want to say to me?" - Dean
+
+cd ~/Desktop/FRAMES/DONE/gif_2
+ffmpeg -y -start_number 00133 -i frame_%04d.png -vf "fps=30,scale=540:-1:flags=lanczos,subtitles=subtitles.srt:force_style='FontName=Arial,Bold=1,Fontsize=12,PrimaryColour=&H0DDAFD,OutlineColour=black,Outline=1,Shadow=0,MarginL=0,MarginR=0'" ~/Desktop/FRAMES/2.gif
+
+
+#gif 3: "The trail for Dad. It's getting colder every day." - Sam
+
+cd ~/Desktop/FRAMES/DONE/gif_3
+ffmpeg -y -start_number 0227 -i frame_%04d.png -vf "fps=30,scale=540:-1:flags=lanczos,subtitles=subtitles.srt:force_style='FontName=Arial,Bold=1,Fontsize=12,PrimaryColour=&HF6F9FA,OutlineColour=black,Outline=1,Shadow=0,MarginL=0,MarginR=0'" ~/Desktop/FRAMES/3.gif
+
+
+#gif 4: need to caption gifs in subfolder 1 and 2 separately.
+
+#Shot 5 "Exactly. So what are we supposed to do?" - Dean
+
+cd ~/Desktop/FRAMES/DONE/gif_4/1
+
+
+for i in *.png; do ffmpeg -y -i "$i" -vf "subtitles=subtitles.srt:force_style='FontName=Arial,Bold=1,Fontsize=12,PrimaryColour=&H0DDAFD,OutlineColour=black,Outline=1,Shadow=0,MarginL=0,MarginR=0'" ~/Desktop/FRAMES/DONE/gif_4/${i%.png}.png; done
+
+
+#Shot 6 "I don't know. Something. Anything." - Sam
+
+cd ~/Desktop/FRAMES/DONE/gif_4/2
+
+for i in *.png; do ffmpeg -y -i "$i" -vf "subtitles=subtitles.srt:force_style='Alignment=2,FontName=Arial,Bold=1,Fontsize=12,PrimaryColour=&HF6F9FA,OutlineColor=black,Outline=1,Shadow=0,MarginL=0,MarginR=0'" ~/Desktop/FRAMES/DONE/gif_4/${i%.png}.png; done
+
+
+cd ~/Desktop/FRAMES/DONE/gif_4
+ffmpeg -y -start_number 0341 -i frame_%04d.png -vf "fps=30,scale=460:-1:flags=lanczos" ~/Desktop/FRAMES/4.gif
+
+
+#gif 5: need to caption gifs in subfolder 1 and 2 separately.
+
+#Shot 7 "You know what? I'm sick of this attitude. You don't think I wanna find Dad as much as you do?" - Dean
+
+cd ~/Desktop/FRAMES/DONE/gif_5/1
+
+
+for i in *.png; do ffmpeg -y -i "$i" -vf "subtitles=subtitles.srt:force_style='FontName=Arial,Bold=1,Fontsize=12,PrimaryColour=&H0DDAFD,OutlineColour=black,Outline=1,Shadow=0,MarginL=0,MarginR=0'" ~/Desktop/FRAMES/DONE/gif_5/${i%.png}.png; done
+
+
+#Shot 8: "Yeah, I know you do, it's just—" - Sam
+
+cd ~/Desktop/FRAMES/DONE/gif_5/2
+
+for i in *.png; do ffmpeg -y -i "$i" -vf "subtitles=subtitles.srt:force_style='Alignment=2,FontName=Arial,Bold=1,Fontsize=12,PrimaryColour=&HF6F9FA,OutlineColor=black,Outline=1,Shadow=0,MarginL=0,MarginR=0'" ~/Desktop/FRAMES/DONE/gif_5/${i%.png}.png; done
+
+
+cd ~/Desktop/FRAMES/DONE/gif_5
+ffmpeg -y -start_number 0458 -i frame_%04d.png -vf "fps=30,scale=400:-1:flags=lanczos" ~/Desktop/FRAMES/5.gif
+
+
+
+#gif 6:
+
+cd ~/Desktop/FRAMES/DONE/gif_6
+ffmpeg -y -start_number 0638 -i frame_%04d.png -vf "fps=30,scale=500:-1:flags=lanczos,subtitles=subtitles.srt:force_style='FontName=Arial,Bold=1,Fontsize=12,PrimaryColour=&H0DDAFD,OutlineColour=black,Outline=1,Shadow=0,MarginL=0,MarginR=0'" ~/Desktop/FRAMES/6.gif
+
+
+#gif 7:
+
+cd ~/Desktop/FRAMES/DONE/gif_7
+ffmpeg -y -start_number 0748 -i frame_%04d.png -vf "fps=30,scale=400:-1:flags=lanczos,subtitles=subtitles.srt:force_style='FontName=Arial,Bold=1,Fontsize=12,PrimaryColour=&H0DDAFD,OutlineColour=black,Outline=1,Shadow=0,MarginL=0,MarginR=0'" ~/Desktop/FRAMES/7.gif
+
+
+#gif 8:
+
+cd ~/Desktop/FRAMES/DONE/gif_8/1
+
+
+for i in *.png; do ffmpeg -y -i "$i" -vf "subtitles=subtitles.srt:force_style='FontName=Arial,Bold=1,Fontsize=12,PrimaryColour=&H0DDAFD,OutlineColour=black,Outline=1,Shadow=0,MarginL=0,MarginR=0'" ~/Desktop/FRAMES/DONE/gif_8/${i%.png}.png; done
+
+
+cd ~/Desktop/FRAMES/DONE/gif_8
+ffmpeg -y -start_number 0913 -i frame_%04d.png -vf "fps=30,scale=430:-1:flags=lanczos" ~/Desktop/FRAMES/8.gif
