@@ -225,7 +225,7 @@ for i in *.png; do ffmpeg -y -i "$i" -filter_complex "[0:v]crop=800:200:0:850,bo
 
 #OutlineColour sets the colour of the box using hexadecimal code but in the format of ‘&HBBGGRR’.
 #It is in the reverse order of a usual HTML hex code which follows the ‘RRGGBB’ sequence.
-# examole: #2596be = &Hbe9625
+# example: #2596be = &Hbe9625
 
 # Off white hex for Sam: #FAF9F6 = &HF6F9FA
 # Yellow hex for Dean: #FDDA0D = &H0DDAFD
