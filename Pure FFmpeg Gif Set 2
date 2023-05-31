@@ -191,7 +191,7 @@ for i in *.png; do ffmpeg -y -i "$i" -vf "crop=1080:1080:200:1080,eq=brightness=
 #Step A1: BLURBOX (for frames in gif_2 folder)
 #-----------------------------------------------
 
-#I want to blur the name card in shot 3. Move frames with name into special subfolder inside DONE folder.
+#I want to blur the name card in shot 3. Move frames with name into special subfolder inside DONE folder called "blurbox".
 #Title card starts on frame 0140 and ends on frame 0214. Drag these frames in folder "blurbox"
 #I'm going to test the blur on one frame. (frame_0163.png)
 
@@ -210,7 +210,7 @@ ffmpeg -y -i frame_0163.png -filter_complex "[0:v]crop=800:200:0:850,boxblur=25[
 ffplay Test.png
 
 
-#Apply to all frames in the blurbox folder and dump back into folder 3.
+#Apply to all frames in the blurbox folder and dump back into gif_2 folder.
 
 cd ~/Desktop/FRAMES/DONE/gif_2/blurbox
 mkdir blurbox
